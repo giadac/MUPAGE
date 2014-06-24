@@ -1,4 +1,4 @@
-Giada Carminati, Annarita Margiotta, Maurizio Spurio
+Giada Carminati, Marco Bazzotti, Annarita Margiotta, Maurizio Spurio
 June 3rd, 2009
 
 MUPAGE : a MUon GEnerator from PArametric formulas. 
@@ -8,6 +8,8 @@ The MUPAGE code was developed for the production of atmospheric
 multimuons on the underwater detector CAN surface, without a
 full Monte Carlo simulation but using parametric formulas.
 MUPAGE is for ANTARES users. 
+
+See DOI: 10.1016/j.cpc.2009.12.017
 
 *******************************************************************
 *******************************************************************
