@@ -151,11 +151,3 @@ NB: The weight of each event is the same, so with the usual notation
 NB: In the header of output file, the tag "norma" is added. With 
     the usual data format, the second integer is the number of 
     events generated for that run.
-
-
-*******************************************************************
-*******************************************************************
-*******************************************************************
-
-  comments and suggestions are, as ever, welcome:
-  giada.carminati@bo.infn.it
