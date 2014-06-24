@@ -1,0 +1,18 @@
+DEPTHmax        2.475    # maximum depth in km (not in km.w.e.)   
+Zmin         -278.151    # minimum z in m                   
+Zmax          313.971    # maximum z in m                   
+CANr          238.611    # can radius in m
+EnlargedCANr  100.0      # meters to add to the can radius
+THETAmin        0.0      # minimum zenith angle in degrees  
+THETAmax       85.0      # maximum zenith angle in degrees  
+Rmin            0.0      # minimum radial distribution in m 
+Rmax          100.0      # maximum radial distribution in m 
+Ethreshold      0.001    # minimum energy of threshold in TeV            
+MULTmin         1        # minimum multiplicity             
+MULTmax      1000        # maximum multiplicity             
+GEANTid         6        # muon in GEANT nomenclature 
+density         1.03     # mean value of seawater density in g cm^(-3)
+AbsLength      55.0      # absorption length in m
+NAbsLength      2.5      # number of absorption length
+
+

@@ -1,0 +1,161 @@
+Giada Carminati, Annarita Margiotta, Maurizio Spurio
+June 3rd, 2009
+
+MUPAGE : a MUon GEnerator from PArametric formulas. 
+version 3 release 4
+
+The MUPAGE code was developed for the production of atmospheric 
+multimuons on the underwater detector CAN surface, without a
+full Monte Carlo simulation but using parametric formulas.
+MUPAGE is for ANTARES users. 
+
+*******************************************************************
+*******************************************************************
+*******************************************************************
+
+BRIEF DESCRIPTION OF THE FILES
+
+src/mupage.cc : C++ code; all MUPAGE routines are there.
+
+dat/parameters.dat : input file with some default parameters:
+		     * the ANTARES detector CAN parameters and its 
+		       depth (for default, parameters are taken from 
+   		       the $THRONG_DIR/DETECTOR/d10_c00_s00.det file);
+		     * the zenithal angle range; 
+		     * parameters for multiplicity, radial 
+		       distribution, energy spectra 
+		       (see internal note ANTARES-Phys/2006-003);
+		     * seawater density
+		     * threshold energy
+   		     WARNING: use the reported units!
+
+--------------NOT TO BE CHANGED BY USER---------------------------
+
+inc/ConvertingUnits.hh : units conversion used in MUPAGE code
+
+inc/Date.hh && src/Date.cc : library to write processing date and time
+	      		     (by G.Carminati, A.Sottoriva)
+
+inc/Decode.hh && src/Decode.cc : class to decode input parameters
+
+inc/Muons.hh && src/Muons.cc : class to generate an event
+
+inc/Parameters.hh && src/Parameters.cc : class with parameters from 
+			"A parameterisation of single and multiple 
+			muons in the deep water or ice" by 
+			Y.Becherini et al., AstroPart. Phys.25 (2006) 1-13 
+                        and used in MUPAGE code yo compute parametric formulas.
+
+inc/ReadDetector.hh && src/ReadDetector.cc : class to read the detector file
+
+--------------OUTPUT FILES EXAMPLE---------------------------------
+
+evt/mupagev3r4.run_01.evt : example of output file with 100000 events in
+		            standard ANTARES data format.
+
+evt/mupagev3r4.table-run_01.evt : example of output file with 100000 events 
+			          in a formatted ASCII table.
+
+livetime/livetimev3r4-run_01.info : example of output file which computes 
+			       	    the generated livetime of detector 
+			            used for the events generated in 
+			            mupage-run_01.evt (for N* and N*_MC see 
+			            internal note ANTARES-Phys/2006-003)
+
+*******************************************************************
+*******************************************************************
+HOW TO USE MUPAGE
+
+* The code was tested on gcc version 3.2.x, 3.4.x and 4.1.x
+* This version (v3r4) runs on Scientific Linux 4.x (32 bit)
+* If you can not use ccali server, please contact me: a version also 
+  for not ANTARES users exists.
+
+*******************************************************************
+*******************************************************************
+HOW TO EXECUTE MUPAGE
+
+* type "make"
+* type "./run-MUPAGE.csh"
+
+*****************************************************************************
+*****************************************************************************
+HOW TO MODIFY THE RANDOM SEED, THE DETECTOR PARAMETERS OR THE DEFAULT 
+PARAMETERS TO COMPUTE PARAMETRIC FORMULAS
+
+* In run-MUPAGE.csh it is possible to modify the random seed, the run number
+  and the number of events to generate. It is also possible to choose in 
+  which folder MUPAGE code must write the output files and select the 
+  detector (by default, there is the most updated). Furthermore it is 
+  possible write the output file in a formatted ASCII table adding the option
+  '-t'.
+* In dat/parameters.dat, it is possible to set other detector geometries 
+  (with respective maximum sea depth) different from the defined ANTARES
+  detectors. May be attention to comment out the option '-g GEOFIL' in
+  run-MUPAGE.csh 
+* In dat/parameters.dat, it is also possible to modify the minimum and the 
+  maximum value of muon multiplicity, the minimum and the maximum value of 
+  the radial distribution for multiple muons, the range of zenithal angle and
+  the seawater density. It is also possible to generate events with a 
+  threshold energy (larger than 1 GeV, that is the minimum generable energy). 
+  Beside each parameter you find the description of it (see internal note 
+  ANTARES-Phys/2006-003) and the units to use. 
+
+-----------------------------------------------------------------------------
+WARNING: Use the reported units!
+-----------------------------------------------------------------------------
+NB: In file dat/parameters.dat the seawater density is reported. For 
+    not using, set it up as 1.
+-------------------------------------------------------------------
+NB: In file dat/parameters.dat the MULTmax default parameter is setted 
+    up as 1000. If a smaller detector than ANTARES full detector is
+    used, MULTmax can be fixed as 100. This doesn't cause a 
+    physical information losing, but a lot of CPU time can be 
+    saved. In this way, the running process can be faster also of a
+    factor 4.
+-------------------------------------------------------------------
+NB: The multiplicity inside the "track_bundle" can be different of the 
+    number of "track_id", because one or more muons in bundle can't be 
+    reached the CAN for geometrical acceptance.
+
+*******************************************************************
+*******************************************************************
+ABOUT LIVETIME COMPUTATION
+
+The method to compute the equivalent livetime of a run in seconds 
+is described in the internal note ANTARES-Phys/2006-003.
+The file livetime/livetime_run-01.info is an example of livetime 
+computation. In this file there is information about the number
+of generated events and how many of these events are arriving on 
+the upper disk of the CAN. In the table, the user can find the 
+values used to compute the equivalent livetime for every range of 
+zenithal angles. N* is the number of single events generated on the 
+upper disk of the CAN in that specific range of zenithal angles.
+Delta N* is the statistical (poissonian) error of N*. N*_MC is the 
+expected rate of single muon events at that given solid angle.
+T is the equivalent livetime (T = N*/N*_MC) and Delta T is the 
+statistical error (Delta T = Delta N*/N*_MC).
+The average livetime is the weighted average of all livetimes in that 
+table with the error computed as the square root of the variance.
+
+The equivalent livetime of the run in seconds is reported in the 
+header of output file. The livetime format is:
+> livetime:  weighted_average   square_root_of_the_variance
+E.g. "livetime: 8.06e+03    3" means that the duration of that
+particular run is (8060 \pm 3) seconds.
+
+-------------------------------------------------------------------
+NB: The weight of each event is the same, so with the usual notation 
+    the w3 weight is: w3=(1/livetime) sec**-1.
+-------------------------------------------------------------------
+NB: In the header of output file, the tag "norma" is added. With 
+    the usual data format, the second integer is the number of 
+    events generated for that run.
+
+
+*******************************************************************
+*******************************************************************
+*******************************************************************
+
+  comments and suggestions are, as ever, welcome:
+  giada.carminati@bo.infn.it
